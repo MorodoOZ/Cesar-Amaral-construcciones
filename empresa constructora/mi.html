@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cesar Amaral Construcciones</title>
+  <!-- CDN de Font Awesome para los íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnH/2b0c9sD5wde3MTU5mep/2OTo8kPzfZ6tAt9qQVehP9wWCw7VjPEsNOKY1dE8uew6lyFZw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Importar Google Fonts (Bangers) para la lista -->
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  <!-- Enlazamos también otros estilos (si los tienes en mi.css) -->
+  <link rel="stylesheet" href="mi.css">
+  <style>
+    /* ====== Reset y estilos base ====== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #4f8f7a;
+      color: #040222e5;
+      line-height: 1.6;
+      /* Espacio para la navegación fija */
+      padding-top: 70px;
+    }
+
+    /* ====== Navegación fija ====== */
+    .fixed-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #02686b;
+      padding: 10px 20px;
+      display: flex;
+      z-index: 100;
+    }
+    .nav-item {
+      flex: 1;
+    }
+    .nav-item a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    .nav-item.left {
+      text-align: left;
+    }
+    .nav-item.center {
+      text-align: center;
+    }
+    .nav-item.right {
+      text-align: right;
+    }
+    .nav-item a:hover {
+      color: #ddd;
+    }
+
+    /* ====== Animaciones ====== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ====== Header ====== */
+    header {
+      background: #00467f;
+      color: #fff;
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      animation: fadeInUp 1.5s ease-out;
+    }
+    header p {
+      font-size: 20px;
+      animation: fadeInUp 2s ease-out;
+    }
+
+    /* ====== Main y Secciones ====== */
+    main {
+      padding: 40px 20px;
+    }
+    /* Secciones de Servicios, Presupuesto y Contacto */
+    #servicios h2,
+    #presupuesto h2,
+    #contacto h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    .services-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+    .service-card i {
+      font-size: 40px;
+      color: #00467f;
+      margin-bottom: 10px;
+    }
+    .service-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 16px;
+    }
+
+    /* ====== Sección de Presupuesto sin Costo ====== */
+    #presupuesto {
+      background: #e3f3f0;
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 60px;
+      border-radius: 8px;
+    }
+    #presupuesto p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    #presupuesto button {
+      background: #02686b;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #presupuesto button:hover {
+      background: #004d48;
+    }
+    /* Estilos para la lista de servicios en la sección Presupuesto */
+    #presupuesto ul#listaServicios {
+      margin-top: 20px;
+      padding: 0;
+      list-style: none;
+      display: none; /* Oculto inicialmente */
+    }
+    #presupuesto ul#listaServicios li {
+      background: #f1c40f;
+      margin: 10px auto;
+      padding: 10px;
+      width: 300px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.5em;
+      border-radius: 8px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInDown 0.5s forwards;
+    }
+    /* Animación secuencial para cada elemento */
+    #presupuesto ul#listaServicios li:nth-child(1){ animation-delay: 0.1s; }
+    #presupuesto ul#listaServicios li:nth-child(2){ animation-delay: 0.2s; }
+    #presupuesto ul#listaServicios li:nth-child(3){ animation-delay: 0.3s; }
+    #presupuesto ul#listaServicios li:nth-child(4){ animation-delay: 0.4s; }
+    #presupuesto ul#listaServicios li:nth-child(5){ animation-delay: 0.5s; }
+    #presupuesto ul#listaServicios li:nth-child(6){ animation-delay: 0.6s; }
+    #presupuesto ul#listaServicios li:nth-child(7){ animation-delay: 0.7s; }
+    #presupuesto ul#listaServicios li:nth-child(8){ animation-delay: 0.8s; }
+    #presupuesto ul#listaServicios li:nth-child(9){ animation-delay: 0.9s; }
+    #presupuesto ul#listaServicios li:nth-child(10){ animation-delay: 1s; }
+
+    /* ====== Sección de Contacto ====== */
+    #contacto {
+      background: #f1f1f1;
+      padding: 40px 20px;
+    }
+    .contact-container {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+    .contact-item {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    .contact-item i {
+      margin-right: 10px;
+      font-size: 24px;
+      vertical-align: middle;
+      color: #00467f;
+    }
+    .contact-item a {
+      color: #00467f;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-item a:hover {
+      color: #333;
+    }
+
+    /* ====== Footer ====== */
+    footer {
+      background: #00467f;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navegación Fija -->
+  <nav class="fixed-nav">
+    <div class="nav-item left">
+      <a href="#inicio">Inicio</a>
+    </div>
+    <div class="nav-item center">
+      <a href="#servicios">Servicios</a>
+    </div>
+    <div class="nav-item right">
+      <a href="#contacto">Contacto</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header id="inicio">
+    <h1>Cesar Amaral Construcciones</h1>
+    <p>Trabajos Llave en mano, Reformas, Pintura, Sanitaria y Más.</p>
+  </header>
+
+  <main>
+    <!-- Sección de Servicios -->
+    <section id="servicios">
+      <h2>Servicios disponibles</h2>
+      <div class="services-container">
+        <div class="service-card">
+          <i class="fas fa-home"></i>
+          <h3>Llave en mano</h3>
+          <p>Servicio integral desde la planificación hasta la entrega final, con garantía de calidad.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-tools"></i>
+          <h3>Reformas</h3>
+          <p>Renovamos y modernizamos tus espacios, adaptándolos a las últimas tendencias.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-paint-roller"></i>
+          <h3>Pintura</h3>
+          <p>Aplicamos técnicas profesionales con productos de alta calidad para un acabado impecable.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-shower"></i>
+          <h3>Sanitaria</h3>
+          <p>Instalación y mantenimiento de sistemas sanitarios, garantizando durabilidad y eficiencia.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-faucet"></i>
+          <h3>Plomería</h3>
+          <p>Soluciones integrales para que tus instalaciones funcionen perfectamente.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-water"></i>
+          <h3>Membrana</h3>
+          <p>Sistemas impermeabilizantes que protegen tus estructuras contra filtraciones.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-layer-group"></i>
+          <h3>Revestimiento</h3>
+          <p>Añade estilo y protección a tus espacios con soluciones personalizadas.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-building"></i>
+          <h3>Construcción general</h3>
+          <p>Obras completas supervisadas al detalle para garantizar un resultado impecable.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-cubes"></i>
+          <h3>Izopanel</h3>
+          <p>Instalamos izopanel de alta calidad para un aislamiento óptimo y duradero.</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-bolt"></i>
+          <h3>Electricidad</h3>
+          <p>Ofrecemos soluciones integrales de electricidad, garantizando eficiencia y seguridad.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Sección de Presupuesto sin Costo -->
+    <section id="presupuesto">
+      <h2>Presupuesto sin Costo</h2>
+      <p>Solicite su presupuesto sin costo y sin compromiso. ¡No molesta, Agradecemos su preferencia!</p>
+      <button id="solicitarPresupuesto">Solicitar Presupuesto</button>
+      <ul id="listaServicios">
+        <li data-servicio="Llave en Mano">Llave en Mano</li>
+        <li data-servicio="Reforma">Reforma</li>
+        <li data-servicio="Pintura">Pintura</li>
+        <li data-servicio="Electricidad">Electricidad</li>
+        <li data-servicio="Plomeria">Plomeria</li>
+        <li data-servicio="Izopanel">Izopanel</li>
+        <li data-servicio="Membrana">Membrana</li>
+        <li data-servicio="Revestimiento">Revestimiento</li>
+        <li data-servicio="Sanitaria">Sanitaria</li>
+        <li data-servicio="Construcción en General">Construcción en General</li>
+      </ul>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <div class="contact-container">
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <a href="tel:099861622">099861622</a>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:komander43@hotmail.com">komander43@hotmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 C.A Construcciones. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Script para la funcionalidad de Presupuesto -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const btnPresupuesto = document.getElementById("solicitarPresupuesto");
+      const listaServicios = document.getElementById("listaServicios");
+      
+      // Alternar la visualización de la lista al pulsar el botón
+      btnPresupuesto.addEventListener("click", function() {
+        if (listaServicios.style.display === "none" || listaServicios.style.display === "") {
+          listaServicios.style.display = "block";
+          // Reiniciamos la animación en cada elemento para volver a repetirla
+          const items = listaServicios.querySelectorAll("li");
+          items.forEach(function(item) {
+            item.style.animation = "none";
+            void item.offsetWidth; // Fuerza el reflow para reiniciar la animación
+            item.style.animation = "";
+          });
+        } else {
+          listaServicios.style.display = "none";
+        }
+      });
+      
+      // Cada elemento de la lista abrirá el cliente de correo con el servicio seleccionado
+      const liItems = listaServicios.querySelectorAll("li");
+      liItems.forEach(function(item) {
+        item.addEventListener("click", function() {
+          const servicio = item.getAttribute("data-servicio");
+          const emailRecipient = "komander43@hotmail.com"; // Cambia este correo según tu necesidad
+          const subject = encodeURIComponent("Solicitud de Presupuesto");
+          const body = encodeURIComponent("Hola, necesito presupuesto para: " + servicio);
+          window.location.href = "mailto:" + emailRecipient + "?subject=" + subject + "&body=" + body;
+        });
+      });
+    });
+  </script>
+
+  <!-- Enlaza el JavaScript adicional si lo requieres -->
+  <script src="mi.js"></script>
+</body>
+</html>

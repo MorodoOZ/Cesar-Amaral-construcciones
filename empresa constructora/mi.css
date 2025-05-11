@@ -1,0 +1,78 @@
+/* ====== Botón "Volver arriba" ====== */
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1d118d;
+    border: none;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 12px;
+    font-size: 20px;
+    z-index: 200;
+    cursor: pointer;
+    display: none;
+    transition: background 0.3s, opacity 0.3s;
+  }
+  
+  #backToTop:hover {
+    background: #002e5d;
+  }
+  
+  /* ====== Animación de aparición para las secciones ====== */
+  section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* ====== Animación para textos del header (opcional) ====== */
+  header h1,
+  /* Animación mejorada para el título */
+header h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    /* Usamos una animación de 2 segundos con easing y que mantiene el estado final */
+    animation: titleAnim 20s ease-out forwards;
+  }
+  
+  @keyframes titleAnim {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+      filter: blur(4px);
+    }
+    50% {
+      opacity: 0.6;
+      transform: translateY(-5px) scale(1.05);
+      filter: blur(1px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  header p {
+    opacity: 0;
+    animation: fadeInUpText 1s forwards;
+  }
+  
+  @keyframes fadeInUpText {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
